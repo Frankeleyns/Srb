@@ -8,8 +8,6 @@
     <artifactId>srb</artifactId>
     <version>1.0</version>
 
-
-
     <!-- 打包方式 -->
     <packaging>pom</packaging>
 
