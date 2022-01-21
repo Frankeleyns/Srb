@@ -7,6 +7,11 @@
     <groupId>com.frankeleyn</groupId>
     <artifactId>srb</artifactId>
     <version>1.0</version>
+    <modules>
+        <module>srb-common</module>
+        <module>service-base</module>
+        <module>service-core</module>
+    </modules>
 
     <!-- 打包方式 -->
     <packaging>pom</packaging>
