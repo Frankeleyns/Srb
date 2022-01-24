@@ -1,15 +1,19 @@
 package com.frankeleyn.srb.core.controller.admin;
 
 
+import com.frankeleyn.common.exception.Assert;
 import com.frankeleyn.common.result.R;
+import com.frankeleyn.common.result.ResponseEnum;
 import com.frankeleyn.srb.core.pojo.entity.IntegralGrade;
 import com.frankeleyn.srb.core.service.IntegralGradeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,6 +25,7 @@ import java.util.Objects;
  * @author Frankeleyn
  * @since 2022-01-21
  */
+@Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping("/admin/core/integralGrade")
@@ -50,6 +55,13 @@ public class IntegralGradeController {
     @ApiOperation("新增积分等级")
     @PostMapping("/save")
     public R save(@ApiParam("积分等级对象") @RequestBody IntegralGrade integralGrade) {
+
+        BigDecimal borrowAmount = integralGrade.getBorrowAmount();
+        // 借款额度不能为空
+        Assert.notNull(borrowAmount, ResponseEnum.BORROW_AMOUNT_NULL_ERROR);
+        // 借款额读不嫩能为0
+        Assert.isTrue(0!=borrowAmount.intValue(), ResponseEnum.BORROW_AMOUNT_NULL_ERROR);
+
         boolean save = integralGradeService.save(integralGrade);
         if (save)
             return R.ok("新增积分等级成功");

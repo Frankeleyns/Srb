@@ -55,6 +55,14 @@ public class R {
         return error().message(message);
     }
 
+    public static R error(Integer code, String message) {
+        return error(message).code(code);
+    }
+
+    public static R error(ResponseEnum responseEnum) {
+        return error(responseEnum.getCode(), responseEnum.getMessage());
+    }
+
     /**
      * 设置特定结果
      */
