@@ -6,7 +6,7 @@
 
 一个用来学习的前后端分离 P2P 金融项目
 
-项目从0到1全过程都在我的[博客](https://frankeleyns.github.io/)中有详细介绍
+项目从0到1全过程都在我的[博客](##教程目录)中有详细介绍
 
 
 
@@ -21,11 +21,13 @@
 
 
 ### 基础环境
-- jdk1.8
+- Jdk1.8
 
-- maven
+- Maven
 
-- idea
+- Idea
+
+- VS Code
 
   
 
@@ -93,4 +95,14 @@ NPM：模块资源管理器
 vue-element-admin：基于Vue.js的后台管理系统UI集成方案
 
 NuxtJS：基于Vue.js构建的服务器端渲染应用的轻量级框架
+
+
+
+## 教程目录
+
+[Srb (一): 项目介绍](https://frankeleyns.github.io/2022/01/22/Srb-1-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/)
+
+[Srb(二):后端工程搭建](https://frankeleyns.github.io/2022/02/03/Srb-2-%E5%90%8E%E7%AB%AF%E5%B7%A5%E7%A8%8B%E6%90%AD%E5%BB%BA/)
+
+[Srb(三):前端工程搭建](https://frankeleyns.github.io/2022/02/07/Srb-3-%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E6%90%AD%E5%BB%BA/#Srb-%E4%B8%89-%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E6%90%AD%E5%BB%BA)
 
