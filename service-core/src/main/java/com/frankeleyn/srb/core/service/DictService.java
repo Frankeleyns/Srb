@@ -17,7 +17,12 @@ import java.util.List;
  */
 public interface DictService extends IService<Dict> {
 
+    // 导入数据
     boolean importData(MultipartFile file);
 
+    // 将 Dict 转为 ExcelDictDTO
     List<ExcelDictDTO> listDictData();
+
+    // 根据父 id 查询子节点数据列表
+    List<Dict> listByParentId(Long parentId);
 }

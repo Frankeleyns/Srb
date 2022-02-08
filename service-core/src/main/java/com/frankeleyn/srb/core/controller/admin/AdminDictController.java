@@ -33,7 +33,13 @@ import java.io.IOException;
 public class AdminDictController {
 
     @Autowired
-    DictService dictService;
+    private DictService dictService;
+
+    @ApiOperation("根据父 id 获取子节点数据列表")
+    @GetMapping("/listByParentId/{parentId}")
+    public R listByParentId(@ApiParam(value = "父 id", required = true) @PathVariable("parentId") Long parentId) {
+        return R.ok("list", dictService.listByParentId(parentId));
+    }
 
     @ApiOperation("Excel 批量导出数据字典")
     @GetMapping("export")

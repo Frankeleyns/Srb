@@ -1,6 +1,7 @@
 package com.frankeleyn.srb.core.service.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.frankeleyn.srb.core.listener.ExcelDictDTOListener;
 import com.frankeleyn.srb.core.mapper.DictMapper;
@@ -51,4 +52,24 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
 
         return list;
     }
+
+    @Override
+    public List<Dict> listByParentId(Long parentId) {
+        List<Dict> dictList = baseMapper.selectList(new QueryWrapper<Dict>().eq("parent_id", parentId));
+        dictList.forEach(dict -> {
+            boolean hasChildren = this.hasChildren(dict.getId());
+            dict.setHasChildren(hasChildren);
+        });
+        return dictList;
+    }
+
+    // 判断是否有子节点
+    private boolean hasChildren(Long id) {
+        Integer count = baseMapper.selectCount(new QueryWrapper<Dict>().eq("parent_id", id));
+        if (count > 0) {
+            return true;
+        }
+        return false;
+    }
+
 }
