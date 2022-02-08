@@ -1,8 +1,11 @@
 package com.frankeleyn.srb.core.service;
 
-import com.frankeleyn.srb.core.pojo.entity.Dict;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.frankeleyn.srb.core.pojo.dto.ExcelDictDTO;
+import com.frankeleyn.srb.core.pojo.entity.Dict;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface DictService extends IService<Dict> {
 
     boolean importData(MultipartFile file);
+
+    List<ExcelDictDTO> listDictData();
 }

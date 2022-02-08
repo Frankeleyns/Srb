@@ -22,7 +22,7 @@ public class UnifiedExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public R handleException(Exception e) {
-        System.out.println("通用异常");
+        System.out.println("通用异常" + e.getMessage());
         return R.error();
     }
 
