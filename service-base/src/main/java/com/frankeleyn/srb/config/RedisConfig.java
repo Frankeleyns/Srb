@@ -1,4 +1,4 @@
-package com.frankeleyn.srb.core.config;
+package com.frankeleyn.srb.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

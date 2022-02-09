@@ -9,9 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.frankeleyn</groupId>
-    <artifactId>service-core</artifactId>
-    <version>1.0</version>
+    <artifactId>service-sms</artifactId>
 
     <dependencies>
 
@@ -21,14 +19,10 @@
             <version>1.0</version>
         </dependency>
 
+        <!--阿里云短信-->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>easyexcel</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.xmlbeans</groupId>
-            <artifactId>xmlbeans</artifactId>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
         </dependency>
 
         <!-- 单元测试 -->
@@ -40,17 +34,5 @@
 
     </dependencies>
 
-    <build>
-        <!-- 项目打包时会将java目录中的*.xml文件也进行打包 -->
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-        </resources>
-    </build>
 
 </project>
