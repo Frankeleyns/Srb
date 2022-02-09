@@ -9,11 +9,14 @@ import com.frankeleyn.srb.core.pojo.dto.ExcelDictDTO;
 import com.frankeleyn.srb.core.pojo.entity.Dict;
 import com.frankeleyn.srb.core.service.DictService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -26,6 +29,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public boolean importData(MultipartFile file) {
@@ -55,11 +61,27 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
 
     @Override
     public List<Dict> listByParentId(Long parentId) {
-        List<Dict> dictList = baseMapper.selectList(new QueryWrapper<Dict>().eq("parent_id", parentId));
+
+        List<Dict> dictList;
+
+        // 1. 先查询 Redis 缓存中中是否有数据字典
+        dictList = (List<Dict>) redisTemplate.opsForValue().get("srb:core:dictList:" + parentId);
+        if (Objects.nonNull(dictList)) {
+            return dictList;
+        }
+
+        // 2. 缓存为空就查询  DB
+        dictList = baseMapper.selectList(new QueryWrapper<Dict>().eq("parent_id", parentId));
         dictList.forEach(dict -> {
             boolean hasChildren = this.hasChildren(dict.getId());
             dict.setHasChildren(hasChildren);
         });
+
+        // 3. 数据库不为空，同步缓存
+        if (Objects.nonNull(dictList)) {
+            redisTemplate.opsForValue().set("srb:core:dictList:" + parentId, dictList);
+        }
+
         return dictList;
     }
 

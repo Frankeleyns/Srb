@@ -106,3 +106,4 @@ NuxtJS：基于Vue.js构建的服务器端渲染应用的轻量级框架
 
 [Srb(三):前端工程搭建](https://frankeleyns.github.io/2022/02/07/Srb-3-%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E6%90%AD%E5%BB%BA/#Srb-%E4%B8%89-%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E6%90%AD%E5%BB%BA)
 
+[Srb(四):数据字典](https://frankeleyns.github.io/2022/02/08/Srb-4-%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8/#04-%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8%E5%88%97%E8%A1%A8%E5%B1%95%E7%A4%BA)
