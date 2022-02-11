@@ -12,6 +12,7 @@
         <module>service-base</module>
         <module>service-core</module>
         <module>service-sms</module>
+        <module>service-oss</module>
     </modules>
 
     <!-- 打包方式 -->

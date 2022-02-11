@@ -18,7 +18,7 @@
 
 ### 1. 引入依赖
 
-在 **service-core** 中引入 redis 的依赖：
+在 **service-base** 中引入 redis 的依赖：
 
 ```xml
 <!-- spring boot redis缓存引入 -->
@@ -47,7 +47,7 @@
 
 ### 2. 配置 redis
 
-在配置文件 **applicaiton.properties** 加入 redis 配置
+在 **service-core** 的配置文件 **applicaiton.properties** 加入 redis 配置
 
 ```properties
 # redis 服务器地址
@@ -120,7 +120,7 @@ public void testSetKey() {
 }
 ```
 
-redis服务器中 存储结果为：
+redis服务器中 jdk 序列号后长这样：
 
  **key: \xAC\xED\x00\x05t\x00\x08key1**
 
@@ -199,3 +199,4 @@ public List<Dict> listByParentId(Long parentId) {
     return dictList;
 }
 ```
+
