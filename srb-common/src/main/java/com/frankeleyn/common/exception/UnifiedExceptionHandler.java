@@ -22,7 +22,7 @@ public class UnifiedExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public R handleException(Exception e) {
-        System.out.println("通用异常" + e.getMessage());
+        System.out.println("通用异常 => " + e.getMessage());
         return R.error();
     }
 
@@ -33,7 +33,7 @@ public class UnifiedExceptionHandler {
      */
     @ExceptionHandler(BadSqlGrammarException.class)
     public R handleSQLException(BadSqlGrammarException e) {
-        System.out.println("SQL 异常" + e.getMessage());
+        System.out.println("SQL 异常 => " + e.getMessage());
         return R.error(ResponseEnum.BAD_SQL_GRAMMAR_ERROR);
     }
 
@@ -44,7 +44,7 @@ public class UnifiedExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public R handleBusinessException(BusinessException e){
-        System.out.println("自定义异常" + e.getMessage());
+        System.out.println("自定义异常 => " + e.getMessage());
         return R.error(e.getCode(), e.getMessage());
     }
 
