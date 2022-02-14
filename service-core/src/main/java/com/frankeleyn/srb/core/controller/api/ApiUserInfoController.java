@@ -9,6 +9,7 @@ import com.frankeleyn.srb.core.pojo.vo.LoginVO;
 import com.frankeleyn.srb.core.pojo.vo.RegisterVO;
 import com.frankeleyn.srb.core.pojo.vo.UserInfoVO;
 import com.frankeleyn.srb.core.service.UserInfoService;
+import com.frankeleyn.srb.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,17 @@ public class ApiUserInfoController {
 
     @Autowired
     private UserInfoService userInfoService;
+
+    @GetMapping("/checkToken")
+    public R checkToken(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        Assert.notNull(token, ResponseEnum.LOGIN_AUTH_ERROR);
+
+        boolean b = JwtUtils.checkToken(token);
+        Assert.isTrue(b, ResponseEnum.WEIXIN_FETCH_ACCESSTOKEN_ERROR);
+
+        return R.ok();
+    }
 
     @PostMapping("/login")
     public R login(@RequestBody LoginVO loginVO, HttpServletRequest request) {
