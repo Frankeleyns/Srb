@@ -1,6 +1,7 @@
 package com.frankeleyn.srb.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.frankeleyn.common.exception.Assert;
 import com.frankeleyn.common.result.ResponseEnum;
@@ -11,11 +12,13 @@ import com.frankeleyn.srb.core.mapper.UserLoginRecordMapper;
 import com.frankeleyn.srb.core.pojo.entity.UserAccount;
 import com.frankeleyn.srb.core.pojo.entity.UserInfo;
 import com.frankeleyn.srb.core.pojo.entity.UserLoginRecord;
+import com.frankeleyn.srb.core.pojo.query.UserInfoQuery;
 import com.frankeleyn.srb.core.pojo.vo.LoginVO;
 import com.frankeleyn.srb.core.pojo.vo.RegisterVO;
 import com.frankeleyn.srb.core.pojo.vo.UserInfoVO;
 import com.frankeleyn.srb.core.service.UserInfoService;
 import com.frankeleyn.srb.utils.JwtUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -42,6 +45,33 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Resource
     private UserLoginRecordMapper userLoginRecordMapper;
+
+    @Override
+    public void lock(Long id, Integer status) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(id);
+        userInfo.setStatus(status);
+
+        baseMapper.updateById(userInfo);
+    }
+
+    @Override
+    public Page<UserInfo> lsitPage(Long currentPage, Long limit, UserInfoQuery userInfoQuery) {
+
+        // 查询条件
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(StringUtils.isNotBlank(userInfoQuery.getMobile()),"mobile", userInfoQuery.getMobile())
+                    .eq(null != userInfoQuery.getUserType(),"user_type", userInfoQuery.getUserType())
+                    .eq(null != userInfoQuery.getStatus(), "status", userInfoQuery.getStatus());
+
+        // 分页查询
+        Page<UserInfo> userInfoPage = new Page<>();
+        userInfoPage.setSize(limit);
+        userInfoPage.setPages(currentPage);
+        Page<UserInfo> page = baseMapper.selectPage(userInfoPage, queryWrapper);
+
+        return page;
+    }
 
     @Override
     public UserInfoVO login(LoginVO loginVO, String ip) {

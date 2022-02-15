@@ -1,7 +1,9 @@
 package com.frankeleyn.srb.core.service;
 
-import com.frankeleyn.srb.core.pojo.entity.UserLoginRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.frankeleyn.srb.core.pojo.entity.UserLoginRecord;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-01-21
  */
 public interface UserLoginRecordService extends IService<UserLoginRecord> {
+
+    List<UserLoginRecord> getUserLoginRecordTop50(Integer userId);
 
 }
