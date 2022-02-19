@@ -9,7 +9,6 @@ import com.frankeleyn.srb.core.service.IntegralGradeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +24,6 @@ import java.util.Objects;
  * @author Frankeleyn
  * @since 2022-01-21
  */
-@Slf4j
-@CrossOrigin
 @RestController
 @RequestMapping("/admin/core/integralGrade")
 @Api(tags = "积分等级管理 Api")

@@ -45,4 +45,11 @@ public interface UserInfoService extends IService<UserInfo> {
      * @param status
      */
     void lock(Long id, Integer status);
+
+    /**
+     * 检查手机号是否被注册
+     * @param mobile
+     * @return
+     */
+    boolean checkMobile(String mobile);
 }

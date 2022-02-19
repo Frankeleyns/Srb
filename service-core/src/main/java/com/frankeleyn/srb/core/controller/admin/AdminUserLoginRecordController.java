@@ -17,7 +17,6 @@ import java.util.List;
  * @author Frankeleyn
  * @since 2022-01-21
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/admin/core/userLoginRecord")
 public class AdminUserLoginRecordController {

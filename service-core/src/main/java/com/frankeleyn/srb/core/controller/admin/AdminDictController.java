@@ -29,7 +29,6 @@ import java.io.IOException;
 @Api(tags = "数据字典管理 Api")
 @RestController
 @RequestMapping("/admin/core/dict")
-@CrossOrigin
 public class AdminDictController {
 
     @Autowired

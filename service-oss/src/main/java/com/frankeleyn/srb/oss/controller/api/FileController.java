@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
  * @date 2022/2/11 10:08
  */
 @Api("文件接口")
-@CrossOrigin
 @RestController
 @RequestMapping("/api/file")
 public class FileController {

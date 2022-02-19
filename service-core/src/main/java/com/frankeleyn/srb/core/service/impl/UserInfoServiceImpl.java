@@ -25,6 +25,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 /**
  * <p>
@@ -45,6 +46,18 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Resource
     private UserLoginRecordMapper userLoginRecordMapper;
+
+    @Override
+    public boolean checkMobile(String mobile) {
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("mobile", mobile);
+        Integer count = baseMapper.selectCount(queryWrapper);
+        if (Objects.nonNull(count) || count > 0) {
+            return false;
+        }
+
+        return true;
+    }
 
     @Override
     public void lock(Long id, Integer status) {

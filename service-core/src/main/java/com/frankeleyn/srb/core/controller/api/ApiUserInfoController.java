@@ -19,13 +19,17 @@ import javax.servlet.http.HttpServletRequest;
  * @author Frankeleyn
  * @date 2022/2/12 16:54
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/api/core/userInfo")
 public class ApiUserInfoController {
 
     @Autowired
     private UserInfoService userInfoService;
+
+    @GetMapping("/checkMobile/{mobile}")
+    public boolean checkMobile(@PathVariable("mobile") String mobile) {
+        return userInfoService.checkMobile(mobile);
+    }
 
     @GetMapping("/checkToken")
     public R checkToken(HttpServletRequest request) {

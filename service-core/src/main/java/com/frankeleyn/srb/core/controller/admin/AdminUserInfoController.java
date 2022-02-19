@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
  * @author Frankeleyn
  * @since 2022-01-21
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/admin/core/userInfo")
 public class AdminUserInfoController {
