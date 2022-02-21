@@ -342,6 +342,8 @@ spring.cloud.gateway.routes[2].predicates[0]=/*/oss/**
 
 ### 2. 测试路由转发
 
+测试前，记得关掉 nginx
+
 访问 http://localhost/admin/core/integralGrade/list
 
 

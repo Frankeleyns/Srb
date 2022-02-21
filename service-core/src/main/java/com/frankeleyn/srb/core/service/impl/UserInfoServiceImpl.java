@@ -80,7 +80,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         // 分页查询
         Page<UserInfo> userInfoPage = new Page<>();
         userInfoPage.setSize(limit);
-        userInfoPage.setPages(currentPage);
+        userInfoPage.setCurrent(currentPage);
         Page<UserInfo> page = baseMapper.selectPage(userInfoPage, queryWrapper);
 
         return page;
