@@ -34,6 +34,12 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     private RedisTemplate redisTemplate;
 
     @Override
+    public List<Dict> findByDictCode(String dictCode) {
+        Dict parent = baseMapper.selectOne(new QueryWrapper<Dict>().eq("dict_code", dictCode));
+        return this.listByParentId(parent.getId());
+    }
+
+    @Override
     public boolean importData(MultipartFile file) {
 
         try {
