@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Api("文件接口")
 @RestController
-@RequestMapping("/api/file")
+@RequestMapping("/api/oss/file")
 public class FileController {
 
     @Autowired

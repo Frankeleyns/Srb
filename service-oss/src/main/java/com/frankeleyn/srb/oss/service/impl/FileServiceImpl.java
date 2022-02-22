@@ -21,8 +21,6 @@ import java.util.UUID;
 @Service
 public class FileServiceImpl implements FileService {
 
-    private String urlPre = "https://" + OssProperties.BUCKET_NAME + "." + OssProperties.ENDPOINT + "/";
-
     @Override
     public String upload(MultipartFile file, String module) {
         // 1. 创建 OSS 连接
@@ -51,6 +49,7 @@ public class FileServiceImpl implements FileService {
         client.shutdown();
 
         // 5. 返回文件上传地址 https://桶名.节点名/模块名/日期/文件名 例: https://bucket.shenzhen/user/2022/02/11/uuid.png
+        String urlPre = "https://" + OssProperties.BUCKET_NAME + "." + OssProperties.ENDPOINT + "/";
         return  urlPre + path;
     }
 
@@ -60,6 +59,7 @@ public class FileServiceImpl implements FileService {
         OSS client = new OSSClientBuilder().build(OssProperties.ENDPOINT, OssProperties.KEY_ID, OssProperties.KEY_SECRET);
 
         // 2. 删除文件
+        String urlPre = "https://" + OssProperties.BUCKET_NAME + "." + OssProperties.ENDPOINT + "/";
         String objectName = url.substring(urlPre.length());
         client.deleteObject(OssProperties.BUCKET_NAME, objectName);
 
