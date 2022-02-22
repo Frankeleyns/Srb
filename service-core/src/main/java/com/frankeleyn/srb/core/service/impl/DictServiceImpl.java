@@ -34,6 +34,17 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     private RedisTemplate redisTemplate;
 
     @Override
+    public String getNameByDictCodeAndValue(String dictCode, Integer value) {
+        Dict parent = baseMapper.selectOne(new QueryWrapper<Dict>().eq("dict_code", dictCode));
+
+        Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>()
+                .eq("parent_id", parent.getId())
+                .eq("value", value));
+
+        return dict.getName();
+    }
+
+    @Override
     public List<Dict> findByDictCode(String dictCode) {
         Dict parent = baseMapper.selectOne(new QueryWrapper<Dict>().eq("dict_code", dictCode));
         return this.listByParentId(parent.getId());

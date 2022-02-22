@@ -23,7 +23,7 @@ public class MyFilter implements GlobalFilter {
         // 获取 cookie 和 token
         MultiValueMap<String, HttpCookie> cookies = exchange.getRequest().getCookies();
         if (Objects.nonNull(cookies) && cookies.size() > 0) {
-            HttpCookie cookieToken = cookies.get("token").get(0);
+            HttpCookie cookieToken = cookies.get("userInfo").get(0);
         }
 
         HttpHeaders headers = exchange.getRequest().getHeaders();

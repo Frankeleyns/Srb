@@ -2,6 +2,9 @@ package com.frankeleyn.srb.core.service;
 
 import com.frankeleyn.srb.core.pojo.entity.BorrowerAttach;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.frankeleyn.srb.core.pojo.vo.BorrowerAttachVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface BorrowerAttachService extends IService<BorrowerAttach> {
 
+    /**
+     * 根据 BorrowerId 查询 用户上传附件
+     * @param id
+     * @return
+     */
+    List<BorrowerAttachVO> selectBorrowerAttachVOList(Long id);
 }
