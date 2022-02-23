@@ -112,10 +112,10 @@ public class BorrowerServiceImpl extends ServiceImpl<BorrowerMapper, Borrower> i
         // 修改 user_info
         userInfo.setBorrowAuthStatus(BorrowerStatusEnum.AUTH_OK.getStatus());
         userInfo.setIntegral(countIntegral);
-
-        // 修改 审核状态
         userInfo.setBorrowAuthStatus(approvalVO.getStatus());
         userInfoMapper.updateById(userInfo);
+
+        // 修改 审核状态
         borrower.setStatus(approvalVO.getStatus());
         baseMapper.updateById(borrower);
     }
