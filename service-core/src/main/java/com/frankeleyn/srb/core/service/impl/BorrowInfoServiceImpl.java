@@ -66,7 +66,7 @@ public class BorrowInfoServiceImpl extends ServiceImpl<BorrowInfoMapper, BorrowI
 
         // 调用标的接口
         System.out.println("调用标的接口，生成标的");
-        //lendService.createLend("参数");
+        lendService.createLend(approvalVO, borrowInfo);
     }
 
     @Override
