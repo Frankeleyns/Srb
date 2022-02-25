@@ -46,8 +46,6 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         String bindCode = (String) notifiedMap.get("bindCode"); // 充值人绑定协议号
         String chargeAmt = (String) notifiedMap.get("chargeAmt"); // 充值金额
 
-
-
         // 更新账户信息
         UserInfo userInfo = userInfoMapper.selectOne(new QueryWrapper<UserInfo>().eq("bind_code", bindCode));
 

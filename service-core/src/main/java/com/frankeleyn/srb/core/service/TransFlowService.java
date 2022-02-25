@@ -21,7 +21,7 @@ public interface TransFlowService extends IService<TransFlow> {
     void saveTransFlow(TransFlowBO transFlowBO);
 
     /**
-     * 查询是否交易已存在
+     * 查询是否交易已存在，用于确保幂等性
      * @param agentBillNo
      * @return
      */
