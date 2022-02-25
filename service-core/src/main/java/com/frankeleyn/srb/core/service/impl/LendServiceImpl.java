@@ -69,7 +69,6 @@ public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements Le
 
     @Override
     public List<Lend> getList() {
-
         List<Lend> lendList = baseMapper.selectList(null);
 
         lendList.forEach(lend -> {
@@ -78,7 +77,6 @@ public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements Le
             lend.getParam().put("returnMethod", returnMethod);
             lend.getParam().put("status", status);
         });
-
 
         return lendList;
     }
@@ -115,7 +113,6 @@ public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements Le
         BigDecimal serviceMonthRate = lend.getServiceRate().divide(new BigDecimal(12), 8, BigDecimal.ROUND_HALF_DOWN);
         BigDecimal expectAmount = lend.getAmount().multiply(serviceMonthRate).multiply(new BigDecimal(borrowInfo.getPeriod()));
         lend.setExpectAmount(expectAmount);
-
 
         baseMapper.insert(lend);
     }

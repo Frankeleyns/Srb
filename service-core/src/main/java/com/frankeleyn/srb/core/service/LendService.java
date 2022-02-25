@@ -31,5 +31,10 @@ public interface LendService extends IService<Lend> {
      */
     List<Lend> getList();
 
+    /**
+     * 查询单个标的信息
+     * @param id
+     * @return
+     */
     Map<String, Object> show(Long id);
 }
