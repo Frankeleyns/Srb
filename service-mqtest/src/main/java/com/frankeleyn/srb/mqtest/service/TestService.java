@@ -20,4 +20,6 @@ public interface TestService {
      * 测试过期时间
      */
     void testTTL();
+
+    void testDelay();
 }

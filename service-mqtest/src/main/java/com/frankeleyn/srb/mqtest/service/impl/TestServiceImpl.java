@@ -34,4 +34,9 @@ public class TestServiceImpl implements TestService {
         System.out.println("测试消息过期时间");
         mqService.sendTTLMessage("test_exchange_ttl", "routing.ttl", "过期时间测试", 5_000L);
     }
+
+    @Override
+    public void testDelay() {
+        //mqService.sendDelayMessage();
+    }
 }

@@ -253,3 +253,118 @@ public class ConsumerTest {
 访问 **http://localhost:8210/recharge**
 
 ![RabbitMq](./img/16/RabbitMQ.png)
+
+
+
+## 三、Service-core 中发送消息
+
+
+
+### 1. Service-base 中新建 DTO
+
+创建 **SmsDTO**
+
+```java
+@Data
+@ApiModel(description = "短信")
+public class SmsDTO {
+
+    @ApiModelProperty(value = "手机号")
+    private String mobile;
+
+    @ApiModelProperty(value = "消息内容")
+    private String message;
+}
+```
+
+
+
+### 2. 引入依赖
+
+```xml
+        <dependency>
+            <groupId>com.frankeleyn</groupId>
+            <artifactId>service-mq</artifactId>
+            <version>1.0</version>
+        </dependency>
+```
+
+
+
+### 3. 配置文件
+
+```properties
+# ========== rabbitmq 配置 ==========
+spring.rabbitmq.host=192.168.209.125
+spring.rabbitmq.port=5672
+spring.rabbitmq.username=admin
+spring.rabbitmq.password=123456
+spring.rabbitmq.virtual-host=/
+```
+
+
+
+### 4. 修改 Service
+
+修改 **UserAccountService** 实现类中的 **notified** 方法，加上下面两句
+
+```java
+// 通过 MQ 调用短信系统，发送充值成功通知
+SmsDTO smsDTO = new SmsDTO(userInfo.getMobile(), "充值成功");
+mqService.sendMessage(MQConst.EXCHANGE_TOPIC_SMS, MQConst.ROUTING_SMS_ITEM, smsDTO);
+```
+
+
+
+## 四、service-sms 接收消息
+
+
+
+### 1. 引入依赖
+
+```xml
+        <dependency>
+            <groupId>com.frankeleyn</groupId>
+            <artifactId>service-mq</artifactId>
+            <version>1.0</version>
+        </dependency>
+```
+
+
+
+### 2. 配置文件
+
+```properties
+# ========== rabbitmq 配置 ==========
+spring.rabbitmq.host=192.168.209.125
+spring.rabbitmq.port=5672
+spring.rabbitmq.username=admin
+spring.rabbitmq.password=123456
+spring.rabbitmq.virtual-host=/
+```
+
+
+
+### 3. 创建 MQ 监听器
+
+```java
+package com.frankeleyn.srb.sms.receiver;
+
+@Component
+@Slf4j
+public class SmsReceiver {
+
+    @Resource
+    private SmsService smsService;
+
+    @RabbitListener(bindings = @QueueBinding(
+            exchange = @Exchange(value = MQConst.EXCHANGE_TOPIC_SMS),
+            value = @Queue(value = MQConst.QUEUE_SMS_ITEM, durable = "true"),
+            key = {MQConst.ROUTING_SMS_ITEM}
+    ))
+    public void send(SmsDTO smsDTO) {
+        System.out.println("消费消息，发送充值成功短信");
+    }
+}
+```
+

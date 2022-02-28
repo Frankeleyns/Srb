@@ -33,4 +33,10 @@ public class TestController {
         testService.testTTL();
         return R.ok();
     }
+
+    @GetMapping("/testDelay")
+    public R testDelay() {
+        testService.testDelay();
+        return R.ok();
+    }
 }

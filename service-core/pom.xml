@@ -38,6 +38,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- 发送消息模块 -->
+        <dependency>
+            <groupId>com.frankeleyn</groupId>
+            <artifactId>service-mq</artifactId>
+            <version>1.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

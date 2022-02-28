@@ -15,6 +15,9 @@ import com.frankeleyn.srb.core.pojo.entity.UserInfo;
 import com.frankeleyn.srb.core.service.TransFlowService;
 import com.frankeleyn.srb.core.service.UserAccountService;
 import com.frankeleyn.srb.core.util.LendNoUtils;
+import com.frankeleyn.srb.dto.SmsDTO;
+import com.frankeleyn.srb.rabbitUtil.constant.MQConst;
+import com.frankeleyn.srb.rabbitUtil.service.MqService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +36,9 @@ import java.util.Map;
  */
 @Service
 public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserAccount> implements UserAccountService {
+
+    @Autowired
+    private MqService mqService;
 
     @Resource
     private UserInfoMapper userInfoMapper;
@@ -59,6 +65,10 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         // 新增交易流水
         TransFlowBO transFlowBO = new TransFlowBO(agentBillNo, bindCode, new BigDecimal(chargeAmt), TransTypeEnum.RECHARGE, "充值到账");
         transFlowService.saveTransFlow(transFlowBO);
+
+        // 通过 MQ 调用短信系统，发送充值成功通知
+        SmsDTO smsDTO = new SmsDTO(userInfo.getMobile(), "充值成功");
+        mqService.sendMessage(MQConst.EXCHANGE_TOPIC_SMS, MQConst.ROUTING_SMS_ITEM, smsDTO);
     }
 
     @Override
