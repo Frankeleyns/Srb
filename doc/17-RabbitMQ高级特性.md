@@ -92,6 +92,21 @@ public class MqAckConfig implements RabbitTemplate.ConfirmCallback, RabbitTempla
 
 ## 三、TTL
 
+TTL 全称 **Time To Live** ( 存活时间 ) 指消息队列在 mq 上的积压时间，就是暂时没有成功消费的消息在 mq 的存活时间。
+
+
+
+**MqService**
+
+```java
+public void sendTTLMessage(String exchange, String routingKey, String message, Long timeMill) {
+    rabbitTemplate.convertAndSend(exchange,routingKey, message, m -> {
+        m.getMessageProperties().setExpiration(timeMill.toString());
+        return m;
+    });
+}
+```
+
 
 
 
@@ -103,4 +118,6 @@ public class MqAckConfig implements RabbitTemplate.ConfirmCallback, RabbitTempla
 
 
 ## 五、延迟队列
+
+
 

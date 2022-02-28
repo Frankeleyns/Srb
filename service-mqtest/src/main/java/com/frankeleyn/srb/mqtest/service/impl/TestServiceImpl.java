@@ -28,4 +28,10 @@ public class TestServiceImpl implements TestService {
         mqService.sendMessage("exchange.confirm", "routing.confirm", "消息确认测试");
 
     }
+
+    @Override
+    public void testTTL() {
+        System.out.println("测试消息过期时间");
+        mqService.sendTTLMessage("test_exchange_ttl", "routing.ttl", "过期时间测试", 5_000L);
+    }
 }

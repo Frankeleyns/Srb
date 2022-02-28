@@ -20,4 +20,12 @@ public class MqServiceImpl implements MqService {
         rabbitTemplate.convertAndSend(exchange, routingKey, message);
         return true;
     }
+
+    @Override
+    public void sendTTLMessage(String exchange, String routingKey, String message, Long timeMill) {
+        rabbitTemplate.convertAndSend(exchange,routingKey, message, m -> {
+            m.getMessageProperties().setExpiration(timeMill.toString());
+            return m;
+        });
+    }
 }

@@ -27,4 +27,10 @@ public class TestController {
         testService.confirm();
         return R.ok();
     }
+
+    @GetMapping("/testTTL")
+    public R testTTL() {
+        testService.testTTL();
+        return R.ok();
+    }
 }

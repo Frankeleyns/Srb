@@ -15,4 +15,9 @@ public interface TestService {
      * 测试确认消息
      */
     void confirm();
+
+    /**
+     * 测试过期时间
+     */
+    void testTTL();
 }

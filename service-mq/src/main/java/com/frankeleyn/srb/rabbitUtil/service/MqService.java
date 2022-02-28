@@ -13,4 +13,12 @@ public interface MqService {
      * @param message 消息
      */
     boolean sendMessage(String exchange, String routingKey, Object message);
+
+    /**
+     * 发送带存活时间的 Message
+     * @param exchange
+     * @param routingKey
+     * @param message
+     */
+    void sendTTLMessage(String exchange, String routingKey, String message, Long timeMill);
 }
