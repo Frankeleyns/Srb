@@ -10,4 +10,9 @@ public interface TestService {
      * 发送充值消息
      */
     void recharge();
+
+    /**
+     * 测试确认消息
+     */
+    void confirm();
 }

@@ -24,4 +24,14 @@ public class ConsumerTest {
         System.out.println(new String(message.getBody()));
     }
 
+
+    @RabbitListener(bindings = @QueueBinding(
+            exchange = @Exchange(value = "exchange.ack"),
+            key = {"routing.ack"},
+            value = @Queue(value = "queue.ack", durable = "true")
+    ))
+    public void testAck(Message message) {
+        System.out.println("测试可靠消费队列");
+        System.out.println(new String(message.getBody()));
+    }
 }

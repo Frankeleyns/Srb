@@ -21,4 +21,10 @@ public class TestController {
         testService.recharge();
         return R.ok();
     }
+
+    @GetMapping("/confirm")
+    public R testConfirm() {
+        testService.confirm();
+        return R.ok();
+    }
 }
