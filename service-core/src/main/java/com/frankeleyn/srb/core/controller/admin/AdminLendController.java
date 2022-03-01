@@ -28,6 +28,11 @@ public class AdminLendController {
     @Autowired
     private LendService lendService;
 
+    @GetMapping("/makeLoan/{id}")
+    public R makeLoan(@PathVariable("id") String id) {
+        return R.ok("放款成功");
+    }
+
     @GetMapping("/show/{id}")
     public R show(@PathVariable("id") Long id) {
         Map<String, Object> lendDetail = lendService.show(id);

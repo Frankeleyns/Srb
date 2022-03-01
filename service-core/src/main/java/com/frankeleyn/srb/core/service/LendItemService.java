@@ -1,7 +1,10 @@
 package com.frankeleyn.srb.core.service;
 
-import com.frankeleyn.srb.core.pojo.entity.LendItem;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.frankeleyn.srb.core.pojo.entity.LendItem;
+import com.frankeleyn.srb.core.pojo.vo.InvestVO;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +16,16 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface LendItemService extends IService<LendItem> {
 
+    /**
+     * 提交投资
+     * @param investVO
+     * @return
+     */
+    String commitInvest(InvestVO investVO);
+
+    /**
+     * 回调
+     * @param paramMap
+     */
+    void notified(Map<String, Object> paramMap);
 }
