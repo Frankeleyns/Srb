@@ -5,6 +5,7 @@ import com.frankeleyn.srb.core.pojo.entity.Lend;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.frankeleyn.srb.core.pojo.vo.BorrowInfoApprovalVO;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -37,4 +38,14 @@ public interface LendService extends IService<Lend> {
      * @return
      */
     Map<String, Object> show(Long id);
+
+    /**
+     * 查询投资收益
+     * @param investAmount
+     * @param lendYearRate
+     * @param period
+     * @param returnMethod
+     * @return
+     */
+    BigDecimal getInterestCount(BigDecimal investAmount, BigDecimal lendYearRate, Integer period, Integer returnMethod);
 }

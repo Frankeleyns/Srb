@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,14 @@ public class ApiLendController {
 
     @Autowired
     private LendService lendService;
+
+    @GetMapping("/getInterestCount/{investAmount}/{lendYearRate}/{period}/{returnMethod}")
+    public R getInterestCount(@PathVariable("investAmount") BigDecimal investAmount, @PathVariable("lendYearRate") BigDecimal lendYearRate,
+                              @PathVariable("period") Integer period, @PathVariable("returnMethod") Integer returnMethod) {
+
+        BigDecimal interestCount = lendService.getInterestCount(investAmount, lendYearRate, period, returnMethod);
+        return R.ok("interestCount", interestCount);
+    }
 
     @GetMapping("/show/{id}")
     public R show(@PathVariable("id") Long id) {

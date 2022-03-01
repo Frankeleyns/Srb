@@ -3,6 +3,7 @@ package com.frankeleyn.srb.core.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.frankeleyn.srb.core.enums.LendStatusEnum;
+import com.frankeleyn.srb.core.enums.ReturnMethodEnum;
 import com.frankeleyn.srb.core.mapper.BorrowerMapper;
 import com.frankeleyn.srb.core.mapper.LendMapper;
 import com.frankeleyn.srb.core.pojo.entity.BorrowInfo;
@@ -13,7 +14,7 @@ import com.frankeleyn.srb.core.pojo.vo.BorrowerDetailVO;
 import com.frankeleyn.srb.core.service.BorrowerService;
 import com.frankeleyn.srb.core.service.DictService;
 import com.frankeleyn.srb.core.service.LendService;
-import com.frankeleyn.srb.core.util.LendNoUtils;
+import com.frankeleyn.srb.core.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +46,36 @@ public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements Le
 
     @Resource
     private DictService dictService;
+
+    @Override
+    public BigDecimal getInterestCount(BigDecimal investAmount, BigDecimal lendYearRate, Integer period, Integer returnMethod) {
+
+        BigDecimal interestCount = new BigDecimal("0");
+
+        int r = returnMethod.intValue();
+
+        if (r == ReturnMethodEnum.ONE.getMethod()) {
+            // 等额本息
+            interestCount = Amount1Helper.getInterestCount(investAmount, lendYearRate, period);
+        }
+
+        if (r == ReturnMethodEnum.TWO.getMethod()) {
+            // 等额本金
+            interestCount = Amount2Helper.getInterestCount(investAmount, lendYearRate, period);
+        }
+
+        if (r == ReturnMethodEnum.THREE.getMethod()) {
+            // 按期付息
+            interestCount = Amount3Helper.getInterestCount(investAmount, lendYearRate, period);
+        }
+
+        if (r == ReturnMethodEnum.FOUR.getMethod()) {
+            // 还本付息
+            interestCount = Amount4Helper.getInterestCount(investAmount, lendYearRate, period);
+        }
+
+        return interestCount;
+    }
 
     @Override
     public Map<String, Object> show(Long id) {
