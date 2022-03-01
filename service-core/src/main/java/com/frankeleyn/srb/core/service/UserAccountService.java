@@ -29,4 +29,11 @@ public interface UserAccountService extends IService<UserAccount> {
      * @param notifiedMap
      */
     void notified(Map<String, Object> notifiedMap);
+
+    /**
+     * 获取账户余额
+     * @param userId
+     * @return
+     */
+    BigDecimal getAccount(Long userId);
 }

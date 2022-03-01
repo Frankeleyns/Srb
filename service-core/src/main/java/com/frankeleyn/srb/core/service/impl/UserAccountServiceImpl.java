@@ -46,6 +46,14 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
     @Autowired
     private TransFlowService transFlowService;
 
+
+    @Override
+    public BigDecimal getAccount(Long userId) {
+        UserAccount userAccount = baseMapper.selectOne(new QueryWrapper<UserAccount>().eq("user_id", userId));
+        return userAccount.getAmount();
+    }
+
+
     @Override
     public void notified(Map<String, Object> notifiedMap) {
         String agentBillNo = (String) notifiedMap.get("agentBillNo"); // 订单号
@@ -70,6 +78,7 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         SmsDTO smsDTO = new SmsDTO(userInfo.getMobile(), "充值成功");
         mqService.sendMessage(MQConst.EXCHANGE_TOPIC_SMS, MQConst.ROUTING_SMS_ITEM, smsDTO);
     }
+
 
     @Override
     public String recharge(BigDecimal chargeAmt, Long userId) {

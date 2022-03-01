@@ -6,10 +6,12 @@ import com.frankeleyn.srb.core.pojo.entity.Lend;
 import com.frankeleyn.srb.core.service.LendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,6 +27,12 @@ public class ApiLendController {
 
     @Autowired
     private LendService lendService;
+
+    @GetMapping("/show/{id}")
+    public R show(@PathVariable("id") Long id) {
+        Map<String, Object> lendDetail = lendService.show(id);
+        return R.ok("lendDetail", lendDetail);
+    }
 
     @GetMapping("/list")
     public R getList() {

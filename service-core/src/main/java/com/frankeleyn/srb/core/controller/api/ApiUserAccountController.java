@@ -9,10 +9,7 @@ import com.frankeleyn.srb.core.service.TransFlowService;
 import com.frankeleyn.srb.core.service.UserAccountService;
 import com.frankeleyn.srb.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
@@ -35,6 +32,17 @@ public class ApiUserAccountController {
 
     @Autowired
     private TransFlowService transFlowService;
+
+    @GetMapping("/auth/getAccount")
+    public R getAccount(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        Assert.notNull(token, ResponseEnum.LOGIN_AUTH_ERROR);
+        Long userId = JwtUtils.getUserId(token);
+        Assert.notNull(userId, ResponseEnum.LOGIN_AUTH_ERROR);
+
+        BigDecimal account = userAccountService.getAccount(userId);
+        return R.ok("account", account);
+    }
 
     @PostMapping("/notify")
     public String notified(HttpServletRequest request) {
@@ -61,5 +69,6 @@ public class ApiUserAccountController {
         String formStr = userAccountService.recharge(chargeAmt, userId);
         return R.ok("formStr", formStr);
     }
+
 }
 
