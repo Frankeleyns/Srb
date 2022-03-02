@@ -36,4 +36,12 @@ public interface UserAccountService extends IService<UserAccount> {
      * @return
      */
     BigDecimal getAccount(Long userId);
+
+    /**
+     * 修改账户金额
+      * @param userId
+     * @param amount
+     * @param freezeAmount
+     */
+    void updateAccount(Long userId, BigDecimal amount, BigDecimal freezeAmount);
 }

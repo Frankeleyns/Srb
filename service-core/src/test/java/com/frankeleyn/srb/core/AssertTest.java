@@ -25,4 +25,5 @@ public class AssertTest {
         Object o = null;
         Assert.notNull(o, "对象不能为空");
     }
+
 }

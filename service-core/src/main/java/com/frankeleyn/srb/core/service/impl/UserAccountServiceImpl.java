@@ -53,6 +53,16 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         return userAccount.getAmount();
     }
 
+    @Override
+    public void updateAccount(Long userId, BigDecimal amount, BigDecimal freezeAmount) {
+        UpdateWrapper<UserAccount> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("user_id", userId);
+        UserAccount userAccount = baseMapper.selectOne(updateWrapper);
+        updateWrapper.set("amount", userAccount.getAmount().add(amount));
+        updateWrapper.set("freeze_amount", userAccount.getFreezeAmount().add(freezeAmount));
+        baseMapper.update(userAccount, updateWrapper);
+    }
+
 
     @Override
     public void notified(Map<String, Object> notifiedMap) {
@@ -62,13 +72,7 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
 
         // 更新账户信息
         UserInfo userInfo = userInfoMapper.selectOne(new QueryWrapper<UserInfo>().eq("bind_code", bindCode));
-
-        UserAccount userAccount = baseMapper.selectOne(new QueryWrapper<UserAccount>().eq("user_id", userInfo.getId()));
-        UpdateWrapper<UserAccount> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("user_id", userInfo.getId());
-        updateWrapper.set("amount", userAccount.getAmount().add(new BigDecimal(chargeAmt)));
-        updateWrapper.set("freeze_amount", userAccount.getFreezeAmount().add(new BigDecimal("0")));
-        baseMapper.update(userAccount, updateWrapper);
+        updateAccount(userInfo.getId(), new BigDecimal(chargeAmt), new BigDecimal("0"));
 
         // 新增交易流水
         TransFlowBO transFlowBO = new TransFlowBO(agentBillNo, bindCode, new BigDecimal(chargeAmt), TransTypeEnum.RECHARGE, "充值到账");

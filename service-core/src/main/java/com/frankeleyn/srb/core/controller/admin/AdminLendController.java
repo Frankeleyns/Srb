@@ -29,7 +29,8 @@ public class AdminLendController {
     private LendService lendService;
 
     @GetMapping("/makeLoan/{id}")
-    public R makeLoan(@PathVariable("id") String id) {
+    public R makeLoan(@PathVariable("id") Long id) {
+        lendService.makeLoan(id);
         return R.ok("放款成功");
     }
 
