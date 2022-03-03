@@ -1,6 +1,7 @@
 package com.frankeleyn.srb.core;
 
 import com.frankeleyn.srb.core.service.UserAccountService;
+import com.frankeleyn.srb.core.service.UserInfoService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,14 @@ public class UserAccountTest {
     @Autowired
     private UserAccountService userAccountService;
 
+    @Autowired
+    private UserInfoService userInfoService;
+
     @Test
     public void test1() {
-        BigDecimal a = new BigDecimal("5");
-        BigDecimal b = new BigDecimal("4");
-        BigDecimal add = a.add(b.negate());
-        System.out.println(add);
-
+        BigDecimal serviceRate = new BigDecimal("0.05");
+        BigDecimal rate = serviceRate.divide(new BigDecimal("12"), 8, BigDecimal.ROUND_HALF_DOWN);
+        System.out.println(rate);
     }
 
 }

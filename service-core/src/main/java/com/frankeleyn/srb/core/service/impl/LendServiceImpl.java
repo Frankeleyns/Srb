@@ -19,6 +19,7 @@ import com.frankeleyn.srb.core.service.*;
 import com.frankeleyn.srb.core.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -74,7 +75,6 @@ public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements Le
 
         // 计算当前还款期，lendItem 收到的本金和利息
         Integer r = lend.getReturnMethod();
-
         Map<Integer, BigDecimal> perMonthPrincipal = new HashMap<>();
         Map<Integer, BigDecimal> perMonthInterest = new HashMap<>();
 
@@ -166,6 +166,7 @@ public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements Le
     }
 
     @Override
+    @Transactional
     public void makeLoan(Long id) {
         Lend lend = baseMapper.selectById(id);
         
@@ -176,7 +177,7 @@ public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements Le
         String agentBillNo = LendNoUtils.getLoanNo();// 放款编号
         hfbParam.put("agentBillNo", agentBillNo);
         // 月服务费率
-        BigDecimal monthRate = lend.getServiceRate().divide(new BigDecimal("12"), 2, BigDecimal.ROUND_HALF_DOWN);
+        BigDecimal monthRate = lend.getServiceRate().divide(new BigDecimal("12"), 8, BigDecimal.ROUND_HALF_DOWN);
         //平台收益 = 已投金额 * 月服务费率 * 标的期数
         BigDecimal serviceAmount = lend.getInvestAmount().multiply(monthRate).multiply(new BigDecimal(lend.getPeriod()));
         hfbParam.put("mchFee", serviceAmount);// 商户手续费(平台收益)
@@ -186,7 +187,7 @@ public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements Le
 
         JSONObject jsonObject = RequestHelper.sendRequest(hfbParam, HfbConst.MAKE_LOAD_URL);
         String resultCode = jsonObject.getString("resultCode");
-        Assert.isTrue(resultCode == "0000", ResponseEnum.MAKE_LOAN_ERROR);
+        Assert.isTrue("0000".equals(resultCode), ResponseEnum.MAKE_LOAN_ERROR);
 
         // 2 更新标的状态
         String resultMchFee = jsonObject.getString("mchFee");

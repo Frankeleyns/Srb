@@ -124,10 +124,10 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         Assert.isTrue(mobile == 0, ResponseEnum.MOBILE_EXIST_ERROR);
 
         // 校验验证码
-        String code = registerVO.getCode();
-        String codeFromCache = (String) redisTemplate.opsForValue().get("srb:sms:code:" + registerVO.getMobile());
-        Assert.notNull(code, ResponseEnum.CODE_NULL_ERROR);
-        Assert.equals(code, codeFromCache, ResponseEnum.CODE_ERROR);
+//        String code = registerVO.getCode();
+//        String codeFromCache = (String) redisTemplate.opsForValue().get("srb:sms:code:" + registerVO.getMobile());
+//        Assert.notNull(code, ResponseEnum.CODE_NULL_ERROR);
+//        Assert.equals(code, codeFromCache, ResponseEnum.CODE_ERROR);
 
         // 保存用户信息
         UserInfo userInfo = new UserInfo();
