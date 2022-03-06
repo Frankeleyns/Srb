@@ -1,7 +1,6 @@
 package com.frankeleyn.srb.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.frankeleyn.srb.core.enums.TransTypeEnum;
 import com.frankeleyn.srb.core.hfb.FormHelper;
@@ -9,12 +8,10 @@ import com.frankeleyn.srb.core.hfb.HfbConst;
 import com.frankeleyn.srb.core.hfb.RequestHelper;
 import com.frankeleyn.srb.core.mapper.LendItemMapper;
 import com.frankeleyn.srb.core.mapper.LendMapper;
-import com.frankeleyn.srb.core.mapper.UserAccountMapper;
 import com.frankeleyn.srb.core.mapper.UserInfoMapper;
 import com.frankeleyn.srb.core.pojo.bo.TransFlowBO;
 import com.frankeleyn.srb.core.pojo.entity.Lend;
 import com.frankeleyn.srb.core.pojo.entity.LendItem;
-import com.frankeleyn.srb.core.pojo.entity.UserAccount;
 import com.frankeleyn.srb.core.pojo.entity.UserInfo;
 import com.frankeleyn.srb.core.pojo.vo.InvestVO;
 import com.frankeleyn.srb.core.service.LendItemService;
@@ -42,9 +39,6 @@ import java.util.Map;
 @Service
 public class LendItemServiceImpl extends ServiceImpl<LendItemMapper, LendItem> implements LendItemService {
 
-    @Resource
-    private UserAccountMapper userAccountMapper;
-
     @Autowired
     private UserAccountService userAccountService;
 
@@ -70,13 +64,7 @@ public class LendItemServiceImpl extends ServiceImpl<LendItemMapper, LendItem> i
 
         // 1 更新投资人信息 (余额和冻结金额)
         UserInfo investors = userInfoMapper.selectOne(new QueryWrapper<UserInfo>().eq("bind_code", bindCode));
-
-        UpdateWrapper<UserAccount> userAccountWrapper = new UpdateWrapper<>();
-        userAccountWrapper.eq("user_id", investors.getId());
-        UserAccount userAccount = userAccountMapper.selectOne(userAccountWrapper);
-        userAccountWrapper.set("amount", userAccount.getAmount().subtract(new BigDecimal(voteAmt)));
-        userAccountWrapper.set("freeze_amount", userAccount.getFreezeAmount().add(new BigDecimal(voteAmt)));
-        userAccountMapper.update(userAccount, userAccountWrapper);
+        userAccountService.updateAccount(investors.getId(), new BigDecimal(voteAmt).negate(), new BigDecimal(voteAmt));
 
         // 2 更新投标状态
         LendItem lendItem = baseMapper.selectOne(new QueryWrapper<LendItem>().eq("lend_item_no", agentBillNo));

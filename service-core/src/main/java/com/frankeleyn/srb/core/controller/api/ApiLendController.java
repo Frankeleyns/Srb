@@ -30,9 +30,10 @@ public class ApiLendController {
     private LendService lendService;
 
     @GetMapping("/getInterestCount/{investAmount}/{lendYearRate}/{period}/{returnMethod}")
-    public R getInterestCount(@PathVariable("investAmount") BigDecimal investAmount, @PathVariable("lendYearRate") BigDecimal lendYearRate,
-                              @PathVariable("period") Integer period, @PathVariable("returnMethod") Integer returnMethod) {
-
+    public R getInterestCount(@PathVariable("investAmount") BigDecimal investAmount,
+                              @PathVariable("lendYearRate") BigDecimal lendYearRate,
+                              @PathVariable("period") Integer period,
+                              @PathVariable("returnMethod") Integer returnMethod) {
         BigDecimal interestCount = lendService.getInterestCount(investAmount, lendYearRate, period, returnMethod);
         return R.ok("interestCount", interestCount);
     }

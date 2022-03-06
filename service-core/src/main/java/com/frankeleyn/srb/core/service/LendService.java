@@ -41,10 +41,10 @@ public interface LendService extends IService<Lend> {
 
     /**
      * 查询投资收益
-     * @param investAmount
-     * @param lendYearRate
-     * @param period
-     * @param returnMethod
+     * @param investAmount 投资金额
+     * @param lendYearRate 年利率
+     * @param period 借款期数
+     * @param returnMethod 借款方式
      * @return
      */
     BigDecimal getInterestCount(BigDecimal investAmount, BigDecimal lendYearRate, Integer period, Integer returnMethod);
